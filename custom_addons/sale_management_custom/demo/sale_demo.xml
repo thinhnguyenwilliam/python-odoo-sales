@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================== -->
+    <!-- DEMO DATA — Đơn hàng mẫu                                            -->
+    <!-- ================================================================== -->
+
+    <!-- Đơn hàng 1: Đã duyệt -->
+    <record id="demo_sale_order_approved" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="approval_state">approved</field>
+        <field name="priority_level">normal</field>
+        <field name="internal_code">SO-2024-00001</field>
+        <field name="note_internal">Đơn hàng demo đã được phê duyệt</field>
+    </record>
+
+    <!-- Đơn hàng 2: Chờ duyệt -->
+    <record id="demo_sale_order_pending" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="approval_state">pending</field>
+        <field name="priority_level">high</field>
+        <field name="internal_code">SO-2024-00002</field>
+        <field name="note_internal">Đơn hàng demo đang chờ phê duyệt</field>
+    </record>
+
+    <!-- Đơn hàng 3: Bị từ chối -->
+    <record id="demo_sale_order_rejected" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="approval_state">rejected</field>
+        <field name="priority_level">urgent</field>
+        <field name="internal_code">SO-2024-00003</field>
+        <field name="rejection_reason">Giá chào hàng chưa phù hợp, vui lòng điều chỉnh lại.</field>
+        <field name="note_internal">Đơn hàng demo bị từ chối</field>
+    </record>
+</odoo>

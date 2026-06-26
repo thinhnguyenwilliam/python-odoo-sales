@@ -1,0 +1,10 @@
+.env
+logs/
+backups/
+nginx/ssl/*.pem
+nginx/ssl/*.key
+nginx/ssl/*.crt
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store

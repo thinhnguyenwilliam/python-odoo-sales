@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================== -->
+    <!-- MENU — Sale Management Custom                                        -->
+    <!-- ================================================================== -->
+
+    <!-- Menu cha: Kinh Doanh > Phê Duyệt -->
+    <menuitem
+        id="menu_sale_approval_root"
+        name="Phê Duyệt Đơn Hàng"
+        parent="sale.sale_menu_root"
+        sequence="5"
+        groups="sales_team.group_sale_salesman"/>
+
+    <!-- Tất cả đơn chờ duyệt -->
+    <menuitem
+        id="menu_sale_pending_approval"
+        name="⏳ Chờ Duyệt"
+        parent="menu_sale_approval_root"
+        action="action_sale_orders_pending_approval"
+        sequence="10"
+        groups="sales_team.group_sale_manager"/>
+
+    <!-- Tất cả đơn đã duyệt -->
+    <record id="action_sale_orders_approved" model="ir.actions.act_window">
+        <field name="name">Đơn Hàng Đã Duyệt</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('approval_state', '=', 'approved')]</field>
+        <field name="context">{'search_default_filter_approved': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_sale_approved"
+        name="✅ Đã Duyệt"
+        parent="menu_sale_approval_root"
+        action="action_sale_orders_approved"
+        sequence="20"
+        groups="sales_team.group_sale_salesman"/>
+
+    <!-- Tất cả đơn bị từ chối -->
+    <record id="action_sale_orders_rejected" model="ir.actions.act_window">
+        <field name="name">Đơn Hàng Bị Từ Chối</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('approval_state', '=', 'rejected')]</field>
+    </record>
+
+    <menuitem
+        id="menu_sale_rejected"
+        name="❌ Bị Từ Chối"
+        parent="menu_sale_approval_root"
+        action="action_sale_orders_rejected"
+        sequence="30"
+        groups="sales_team.group_sale_salesman"/>
+
+    <!-- Đơn hàng quá hạn -->
+    <record id="action_sale_orders_overdue" model="ir.actions.act_window">
+        <field name="name">Đơn Hàng Quá Hạn</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_overdue', '=', True)]</field>
+    </record>
+
+    <menuitem
+        id="menu_sale_overdue"
+        name="⚠️ Quá Hạn"
+        parent="menu_sale_approval_root"
+        action="action_sale_orders_overdue"
+        sequence="40"
+        groups="sales_team.group_sale_salesman"/>
+
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================== -->
+    <!-- SCHEDULED ACTION — Tự động cảnh báo đơn hàng quá hạn               -->
+    <!-- ================================================================== -->
+    <record id="ir_cron_check_overdue_orders" model="ir.cron">
+        <field name="name">Sale: Kiểm Tra Đơn Hàng Quá Hạn</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_overdue_orders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+
+    <!-- ================================================================== -->
+    <!-- SCHEDULED ACTION — Tự động nhắc nhở đơn chờ duyệt quá 2 ngày      -->
+    <!-- ================================================================== -->
+    <record id="ir_cron_remind_pending_orders" model="ir.cron">
+        <field name="name">Sale: Nhắc Nhở Đơn Chờ Duyệt</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_remind_pending_orders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+</odoo>

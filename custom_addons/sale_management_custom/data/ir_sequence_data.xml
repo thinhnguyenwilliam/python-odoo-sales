@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence: Mã đơn hàng nội bộ -->
+    <record id="sequence_sale_order_internal" model="ir.sequence">
+        <field name="name">Sale Order Internal Code</field>
+        <field name="code">sale.order.internal</field>
+        <field name="prefix">SO-%(year)s-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+        <!-- Ví dụ output: SO-2024-00001 -->
+    </record>
+</odoo>

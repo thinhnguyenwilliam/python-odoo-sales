@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================== -->
+    <!-- RES PARTNER — Thêm tab Lịch Sử Kinh Doanh                          -->
+    <!-- ================================================================== -->
+    <record id="view_partner_form_sale_custom" model="ir.ui.view">
+        <field name="name">res.partner.form.sale.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Tab mới: Thống Kê Bán Hàng -->
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page string="📊 Thống Kê Bán Hàng" name="sale_stats_custom">
+                    <group>
+                        <group string="Tổng Quan Đơn Hàng">
+                            <field name="sale_order_count" string="Tổng Số Đơn"/>
+                        </group>
+                        <group string="Phân Loại Trạng Thái Duyệt">
+                            <field name="pending_approval_count"
+                                   string="⏳ Chờ Duyệt"/>
+                            <field name="approved_order_count"
+                                   string="✅ Đã Duyệt"/>
+                            <field name="rejected_order_count"
+                                   string="❌ Bị Từ Chối"/>
+                        </group>
+                    </group>
+
+                    <!-- Danh sách đơn hàng gần nhất -->
+                    <separator string="5 Đơn Hàng Gần Nhất"/>
+                    <field name="sale_order_ids"
+                           nolabel="1"
+                           mode="list"
+                           domain="[('partner_id', '=', active_id)]"
+                           context="{'default_partner_id': active_id}">
+                        <list string="Đơn Hàng">
+                            <field name="name"/>
+                            <field name="date_order"/>
+                            <field name="amount_total" sum="Tổng"/>
+                            <field name="approval_state"
+                                   decoration-success="approval_state == 'approved'"
+                                   decoration-danger="approval_state == 'rejected'"
+                                   decoration-warning="approval_state == 'pending'"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Thêm computed fields vào res.partner -->
+    <!-- (fields được define trong models/res_partner.py) -->
+
+</odoo>

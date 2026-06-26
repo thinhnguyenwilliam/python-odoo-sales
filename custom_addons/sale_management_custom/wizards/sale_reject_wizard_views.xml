@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================== -->
+    <!-- FORM VIEW - Reject Wizard                                            -->
+    <!-- ================================================================== -->
+    <record id="view_sale_reject_wizard_form" model="ir.ui.view">
+        <field name="name">sale.reject.wizard.form</field>
+        <field name="model">sale.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Từ Chối Đơn Hàng">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Từ Chối: <field name="order_name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <field name="order_id" invisible="1"/>
+                        <field name="rejection_reason"
+                               placeholder="Nhập lý do từ chối cụ thể để nhân viên biết và điều chỉnh..."
+                               nolabel="1"
+                               widget="text"
+                               required="1"/>
+                    </group>
+                    <group>
+                        <field name="notify_salesman"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_reject"
+                            string="✓ Xác Nhận Từ Chối"
+                            type="object"
+                            class="btn-danger"/>
+                    <button string="Hủy"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

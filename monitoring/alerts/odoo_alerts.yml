@@ -1,0 +1,95 @@
+groups:
+  # ── Odoo Application Alerts ─────────────────────────────────
+  - name: odoo_alerts
+    rules:
+      - alert: OdooDown
+        expr: up{job="nginx"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 Odoo đã DOWN!"
+          description: "Odoo không phản hồi hơn 30 giây."
+
+      - alert: OdooHighResponseTime
+        expr: nginx_http_request_duration_seconds_quantile{quantile="0.99"} > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 Odoo phản hồi chậm"
+          description: "99th percentile response time > 5 giây."
+
+  # ── PostgreSQL Alerts ────────────────────────────────────────
+  - name: postgres_alerts
+    rules:
+      - alert: PostgresDown
+        expr: pg_up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 PostgreSQL DOWN!"
+
+      - alert: PostgresHighConnections
+        expr: pg_stat_activity_count > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 PostgreSQL kết nối cao"
+          description: "Số kết nối DB > 80 (max=100)."
+
+      - alert: PostgresDiskUsageHigh
+        expr: pg_database_size_bytes / 1024 / 1024 / 1024 > 20
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 DB size > 20GB"
+
+  # ── System Resource Alerts ───────────────────────────────────
+  - name: system_alerts
+    rules:
+      - alert: HighCPU
+        expr: 100 - (avg by(instance)(irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 CPU sử dụng > 90%"
+
+      - alert: HighRAM
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 RAM sử dụng > 85%"
+
+      - alert: DiskSpaceLow
+        expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100 < 15
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 Disk còn dưới 15%!"
+
+  # ── Redis Alerts ─────────────────────────────────────────────
+  - name: redis_alerts
+    rules:
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 Redis DOWN!"
+
+      - alert: RedisHighMemory
+        expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟡 Redis memory > 80%"

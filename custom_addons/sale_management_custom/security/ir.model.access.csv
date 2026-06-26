@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# Sale Order - Nhân viên: đọc/tạo/sửa, không xóa
+access_sale_order_custom_user,sale.order.custom.user,sale.model_sale_order,sales_team.group_sale_salesman,1,1,1,0
+# Sale Order - Manager: full quyền
+access_sale_order_custom_manager,sale.order.custom.manager,sale.model_sale_order,sales_team.group_sale_manager,1,1,1,1
+# Sale Reject Wizard - tất cả nhóm sale
+access_sale_reject_wizard_user,sale.reject.wizard.user,model_sale_reject_wizard,sales_team.group_sale_salesman,1,1,1,1
+access_sale_reject_wizard_manager,sale.reject.wizard.manager,model_sale_reject_wizard,sales_team.group_sale_manager,1,1,1,1

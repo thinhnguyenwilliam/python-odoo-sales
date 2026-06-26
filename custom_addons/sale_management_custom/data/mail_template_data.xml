@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Email template: Thông báo duyệt đơn hàng -->
+    <record id="email_template_sale_approved" model="mail.template">
+        <field name="name">Sale Order: Approved Notification</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">✅ Đơn Hàng {{ object.name }} Đã Được Phê Duyệt</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="email_from">{{ object.company_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h2 style="color: #28a745;">✅ Đơn Hàng Đã Được Phê Duyệt</h2>
+                <p>Kính gửi <strong>{{ object.partner_id.name }}</strong>,</p>
+                <p>
+                    Đơn hàng <strong>{{ object.name }}</strong> của quý khách
+                    đã được phê duyệt thành công vào lúc
+                    <strong>{{ object.approval_date }}</strong>.
+                </p>
+                <table style="border-collapse: collapse; width: 100%;">
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Thông Tin</th>
+                        <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Giá Trị</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">Số Đơn Hàng</td>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">{{ object.name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">Tổng Tiền</td>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">
+                            {{ "{:,.0f}".format(object.amount_total) }} {{ object.currency_id.symbol }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">Người Duyệt</td>
+                        <td style="padding: 8px; border: 1px solid #dee2e6;">{{ object.approver_id.name }}</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px;">Trân trọng,<br/>{{ object.company_id.name }}</p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Email template: Thông báo từ chối đơn hàng -->
+    <record id="email_template_sale_rejected" model="mail.template">
+        <field name="name">Sale Order: Rejected Notification</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">❌ Đơn Hàng {{ object.name }} Bị Từ Chối</field>
+        <field name="email_to">{{ object.user_id.email }}</field>
+        <field name="email_from">{{ object.company_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h2 style="color: #dc3545;">❌ Đơn Hàng Bị Từ Chối</h2>
+                <p>Kính gửi <strong>{{ object.user_id.name }}</strong>,</p>
+                <p>
+                    Đơn hàng <strong>{{ object.name }}</strong>
+                    đã bị từ chối bởi <strong>{{ object.approver_id.name }}</strong>.
+                </p>
+                <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                    <strong>Lý Do:</strong><br/>
+                    {{ object.rejection_reason or 'Không có lý do cụ thể.' }}
+                </div>
+                <p>Vui lòng xem lại đơn hàng và điều chỉnh theo phản hồi trên.</p>
+                <p>Trân trọng,<br/>{{ object.company_id.name }}</p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>
