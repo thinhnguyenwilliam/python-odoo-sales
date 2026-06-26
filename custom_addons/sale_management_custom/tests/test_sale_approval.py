@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later
 
 from odoo.tests.common import TransactionCase
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from odoo import fields
 
 

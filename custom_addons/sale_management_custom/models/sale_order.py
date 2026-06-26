@@ -425,4 +425,3 @@ class SaleOrder(models.Model):
                 body=body,
             )
         _logger.info("Cron pending reminder: %d orders reminded", len(pending_orders))
-
